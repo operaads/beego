@@ -90,6 +90,7 @@ type WebConfig struct {
 	XSRFKey                string
 	XSRFExpire             int
 	Session                SessionConfig
+	StatusCode403To404     bool
 }
 
 // SessionConfig holds session related config
@@ -106,6 +107,7 @@ type SessionConfig struct {
 	SessionEnableSidInHTTPHeader bool // enable store/get the sessionId into/from http headers
 	SessionNameInHTTPHeader      string
 	SessionEnableSidInURLQuery   bool // enable get the sessionId from Url Query params
+	SessionEnableSecure          bool // enable secure flag for cooikes
 }
 
 // LogConfig holds Log related config

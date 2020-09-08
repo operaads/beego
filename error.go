@@ -28,7 +28,7 @@ import (
 )
 
 const (
-	errorTypeHandler    = iota
+	errorTypeHandler = iota
 	errorTypeController
 )
 
@@ -438,7 +438,12 @@ func executeError(err *errorInfo, ctx *context.Context, code int) {
 	LogAccess(ctx, nil, code)
 
 	if err.errorType == errorTypeHandler {
-		ctx.ResponseWriter.WriteHeader(code)
+		if code == http.StatusForbidden && BConfig.WebConfig.StatusCode403To404 {
+			ctx.ResponseWriter.WriteHeader(http.StatusNotFound)
+		} else {
+			ctx.ResponseWriter.WriteHeader(code)
+		}
+
 		err.handler(ctx.ResponseWriter, ctx.Request)
 		return
 	}
