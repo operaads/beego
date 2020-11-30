@@ -885,15 +885,10 @@ func (p *ControllerRegister) ServeHTTP(rw http.ResponseWriter, r *http.Request) 
 				execController.Trace()
 			default:
 				if !execController.HandlerFunc(runMethod) {
-					vc := reflect.ValueOf(execController)
-
-					if !vc.IsZero() {
-						method := vc.MethodByName(runMethod)
-
-						if !method.IsZero() {
+					if vc := reflect.ValueOf(execController); vc.IsValid() {
+						if method := vc.MethodByName(runMethod); method.IsValid() {
 							in := param.ConvertParams(methodParams, method.Type(), context)
 							out := method.Call(in)
-
 							// For backward compatibility we only handle response if we had incoming methodParams
 							if methodParams != nil {
 								p.handleParamResponse(context, execController, out)
