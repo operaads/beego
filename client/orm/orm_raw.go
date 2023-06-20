@@ -443,7 +443,7 @@ func (o *rawSet) QueryRow(containers ...interface{}) error {
 	return nil
 }
 
-// query data rows and map to container
+// QueryRows query data rows and map to container
 func (o *rawSet) QueryRows(containers ...interface{}) (int64, error) {
 	var (
 		refs  = make([]interface{}, 0, len(containers))
@@ -500,7 +500,6 @@ func (o *rawSet) QueryRows(containers ...interface{}) (int64, error) {
 	sInd := sInds[0]
 
 	for rows.Next() {
-
 		if structMode {
 			columns, err := rows.Columns()
 			if err != nil {
@@ -593,14 +592,16 @@ func (o *rawSet) QueryRows(containers ...interface{}) (int64, error) {
 			sInd = reflect.Append(sInd, ind)
 
 		} else {
-			if err := rows.Scan(refs...); err != nil {
+			if err = rows.Scan(refs...); err != nil {
 				return 0, err
 			}
-
 			o.loopSetRefs(refs, sInds, &nInds, eTyps, cnt == 0)
 		}
-
 		cnt++
+	}
+
+	if err = rows.Err(); err != nil {
+		return 0, err
 	}
 
 	if cnt > 0 {
@@ -730,6 +731,10 @@ func (o *rawSet) readValues(container interface{}, needCols []string) (int64, er
 		cnt++
 	}
 
+	if err = rs.Err(); err != nil {
+		return 0, err
+	}
+
 	switch v := container.(type) {
 	case *[]Params:
 		*v = maps
@@ -845,6 +850,9 @@ func (o *rawSet) queryRowsTo(container interface{}, keyCol, valueCol string) (in
 		cnt++
 	}
 
+	if err = rs.Err(); err != nil {
+		return 0, err
+	}
 	if typ == 1 {
 		v, _ := container.(*Params)
 		*v = maps

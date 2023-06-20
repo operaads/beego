@@ -1,4 +1,5 @@
 # developing
+- [fix 5255: Check the rows.Err() if rows.Next() is false](https://github.com/beego/beego/pull/5256)
 
 # v2.1.0
 - [unified gopkg.in/yaml version to v2](https://github.com/beego/beego/pull/5169)
