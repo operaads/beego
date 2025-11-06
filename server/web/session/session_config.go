@@ -6,6 +6,7 @@ import "net/http"
 type ManagerConfig struct {
 	EnableSetCookie         bool          `json:"enableSetCookie,omitempty"`
 	DisableHTTPOnly         bool          `json:"disableHTTPOnly"`
+	ForceSecure             bool          `json:"forceSecure"`
 	Secure                  bool          `json:"secure"`
 	EnableSidInHTTPHeader   bool          `json:"EnableSidInHTTPHeader"`
 	EnableSidInURLQuery     bool          `json:"EnableSidInURLQuery"`

@@ -53,6 +53,7 @@ func registerSession() error {
 			conf.CookieName = BConfig.WebConfig.Session.SessionName
 			conf.EnableSetCookie = BConfig.WebConfig.Session.SessionAutoSetCookie
 			conf.Gclifetime = BConfig.WebConfig.Session.SessionGCMaxLifetime
+			conf.ForceSecure = BConfig.WebConfig.Session.ForceSecure
 			conf.Secure = BConfig.Listen.EnableHTTPS
 			conf.CookieLifeTime = BConfig.WebConfig.Session.SessionCookieLifeTime
 			conf.ProviderConfig = filepath.ToSlash(BConfig.WebConfig.Session.SessionProviderConfig)

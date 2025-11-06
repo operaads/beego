@@ -410,6 +410,11 @@ type SessionConfig struct {
 	// @Description session id's prefix
 	// @Default ""
 	SessionIDPrefix string
+
+	// ForceSecure
+	// @Description force secure cookie
+	// @Default false
+	ForceSecure bool
 }
 
 // LogConfig holds Log related config
